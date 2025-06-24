@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sürpriz Mesaj</title>
+<style>
+  body, html {
+    margin:0; padding:0; height:100%;
+    background:#0d0d0d; color:#fff;
+    font-family: Arial, sans-serif;
+    display:flex; flex-direction: column;
+    align-items:center; justify-content:center;
+    user-select:none;
+    text-align:center;
+  }
+  button {
+    font-size: 1.8em;
+    padding: 15px 40px;
+    border:none;
+    border-radius:12px;
+    background: linear-gradient(45deg, #1db954, #1ed760);
+    color: white;
+    cursor: pointer;
+    margin: 20px 0;
+    min-width: 200px;
+  }
+  #messageBox {
+    max-width: 400px;
+    background: #222;
+    padding: 20px;
+    border-radius: 15px;
+    display: none;
+    font-size: 1.1em;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    margin-top: 20px;
+  }
+  #controls {
+    margin-top: 20px;
+    display: none;
+  }
+  button.controlBtn {
+    background: linear-gradient(45deg, #1db954, #1ed760);
+    border: none;
+    color: #fff;
+    padding: 10px 25px;
+    margin: 0 15px;
+    font-size: 1.2em;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  button.controlBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+</style>
+</head>
+<body>
+
+<div id="introText">
+  <p>Müziğimiz olmadan olmaz 🎵</p>
+  <button id="spotifyBtn">Spotify'da Başlat</button>
+</div>
+
+<div id="messageBox"></div>
+
+<div id="controls">
+  <button id="prevBtn" class="controlBtn" disabled>← Önceki</button>
+  <button id="nextBtn" class="controlBtn">Sonraki →</button>
+</div>
+
+<script>
+  const spotifyBtn = document.getElementById('spotifyBtn');
+  const introText = document.getElementById('introText');
+  const messageBox = document.getElementById('messageBox');
+  const controls = document.getElementById('controls');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  const spotifyLink = "https://open.spotify.com/intl-tr/track/3uCcoxif1cNSDivDOsi69C?si=b9611e89885f4170";
+
+  const messages = [
+    `Merhabalar,\n\nÖncelikle bu mesajı okuduğun için sana sadece sabretmeyi öğretmiş oluyorum. Sana sabretmeyi öğreteceğimi söylemiştim ve bana kalırsa da öyle oldu. Fakat bu süreçte seni biraz yıprattım. Bu konu hakkında özürlerimi iletiyorum; belki bir anlamı olmayacaktır ama yine de affedebileceğini biliyorum.`,
+    `Eğer konuya geçmem gerekirse; Zeynep, yaptığın şeyler açıkça beni çok üzdü ve bu üzüntü maalesef seni de soğuttu. Fakat bu soğuma geçebilir. Bütün olay senin elinde. Bu sefer de ben sana sadece “benim dediklerimi yap” demeyeceğim, hiç bir zaman. Ama bir anda ortadan gitmen beni gerçekten derinden etkiledi.`,
+    `Aslında biliyor musun, geri dönmek aklımın ucundan bile geçmiyordu fakat sana bu hayatta öğreteceğim daha çok şey olacağını düşünüyorum. Aynı şekilde senin de bana öğreteceğin şeyler vardır.`,
+    `Zeynep, aslında geri dönüşü olmayan bir yola soktuğunu bilmene rağmen yine de sana gerçekten sadece tek bir şans vermek istiyorum. Ama bunu bu mesajı okuduktan sonra başlatmak istedim çünkü dönüp dolaşıp tekrardan sabır konusuna geliyor.\n\nZeynep, seni aslında hiçbir zaman kendi içimde affedemeyeceğim ama senin için kendi içimde yeni bir sayfa açacağım. Umarım artık beni biraz da olsa anlamak istersin.\n\nZeynebim, seni tekrardan bir daha hiç bir zaman bir erkek için ağlarken görmeyeceğim, haberin olsun. Olur da ağlarsan, işte o zaman bozuluruz.\n\nTekrar devam etmek istiyorum.`
+  ];
+
+  let currentIndex = 0;
+
+  spotifyBtn.onclick = () => {
+    window.open(spotifyLink, '_blank');
+    introText.style.display = 'none';
+    messageBox.style.display = 'block';
+    controls.style.display = 'flex';
+    updateMessage();
+  };
+
+  prevBtn.onclick = () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateMessage();
+    }
+  };
+
+  nextBtn.onclick = () => {
+    if (currentIndex < messages.length - 1) {
+      currentIndex++;
+      updateMessage();
+    }
+  };
+
+  function updateMessage() {
+    messageBox.textContent = messages[currentIndex];
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex === messages.length - 1;
+  }
+</script>
+
+</body>
+</html>
